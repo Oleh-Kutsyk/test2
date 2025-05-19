@@ -1,0 +1,33 @@
+services:
+  next_js:
+    container_name: next_js
+    build: .
+    environment:
+      - DATABASE_URL=prisma+postgres://accelerate.prisma-data.net/?api_key=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJhcGlfa2V5IjoiZDMzZmY4MTMtOWQwMi00OTBjLTg1YTQtNzhiOTYwNDYyMzE1IiwidGVuYW50X2lkIjoiYThkYzZhNDY2NWJiYWY2Zjc0MzE5YzZmNjk3NDlkNWYzNTA3MzEzNTVjNWJlZGI2ZWVlYjUzOTMxYTcxZTMyOSIsImludGVybmFsX3NlY3JldCI6ImNlZGZlZGUxLWUyZWYtNGRjNi05MWI5LTQwNDUxZDM2NjM2ZiJ9.PcR5LGo0kL3lYZRz_51YPU5MLqVNIYp4T-iI-e0mfVU
+      - JWT_SECRET=your_jwt_secret_here
+      - NODE_ENV=development
+      - PORT=3000
+      - ACCESS_TOKEN=random_secret
+      - REFRESH_TOKEN=random_secret
+      - BETTER_AUTH_SECRET=M9xfKt8UNgsNhdaIuvROD3Y6hJ3usZWs
+      - BETTER_AUTH_URL=http://localhost:3000
+    ports:
+      - '3000:3000'
+    volumes:
+      - .:/app
+      - /app/node_modules
+
+  db:
+    image: postgres:13-alpine
+    container_name: postgres-db
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: postgres
+      POSTGRES_DB: todoapp
+    ports:
+      - "5432:5432"
+    volumes:
+      - postgres-data:/var/lib/postgresql/data
+
+volumes:
+  postgres-data:
